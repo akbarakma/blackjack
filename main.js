@@ -100,6 +100,15 @@ function countHand(){
         }
     }
     document.getElementById('your-hand-card').innerHTML = cardInHand;
+    if(yourScore > 21 && yourHand.length === 2){
+        yourScore = 2;
+        document.getElementById('your-hand').innerHTML = yourScore;
+    }
+    else if(yourHand[yourHand.length-1] === 11){
+        yourScore -= yourHand[yourHand.length-1];
+        yourScore += 1;
+        document.getElementById('your-hand').innerHTML = yourScore;
+    }
     if(dealerScore >20 || yourScore > 20){
         endGame(dealerScore,yourScore);
     }
