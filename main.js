@@ -203,6 +203,7 @@ function checkMoney(money){
 
 function gameOver(){
     money = 100000;
+    document.getElementById('your-money').innerHTML = money;
     restart()
 }
 
