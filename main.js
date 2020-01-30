@@ -4,6 +4,7 @@ var cards = [];
 var money = 100000;
 
 // AS AS
+// masih ada undefined
 function convertToRupiah(angka){
 	var rupiah = '';		
 	var angkarev = angka.toString().split('').reverse().join('');
@@ -125,7 +126,19 @@ function stay(){
         var indexDealer = Math.round(dealer);
         dealerHand.push(cards[indexDealer]);
         cards.splice(indexDealer , 1);
-        dealerScore += dealerHand[dealerHand.length-1];
+        if(dealerHand[dealerHand.length-1] === 11 && dealerScore < 21){
+            if(dealerScore + 11 === 21){
+                dealerScore = 21;
+            }
+            else{
+                dealerScore += 1;
+                dealerHand.pop();
+                dealerHand.push(1);
+            }
+        }
+        else{
+            dealerScore += dealerHand[dealerHand.length-1];
+        }
     }
     dealerScore = 0;
     for(var i = 0 ; i < dealerHand.length ; i++){
@@ -140,8 +153,8 @@ function hit(){
     var your = Math.random()*cards.length;
     var indexYour = Math.round(your);
     yourHand.push(cards[indexYour]);
+    cards.splice(indexYour , 1);
     countHand();
-    
 }
 
 function endGame(dealer,your){
