@@ -46,25 +46,30 @@ function addCard(){
 }
 
 function startGame(){
-    document.getElementById('hand').style.display = "block";
-    document.getElementById('bet').style.display = "none";
-    document.getElementById('hit-me').style.display = "block";
-    document.getElementById('stay').style.display = "block";
-    document.getElementById('start').style.display = "none";
-    addCard();
-    var dealer = Math.random()*cards.length;
-    var indexDealer = Math.round(dealer);
-    dealerHand.push(cards[indexDealer]);
-    cards.splice(indexDealer , 1);
-    var your1 = Math.random()*cards.length;
-    var indexYour1 = Math.round(your1);
-    yourHand.push(cards[indexYour1]);
-    cards.splice(indexYour1 , 1);
-    var your2 = Math.random()*cards.length;
-    var indexYour2 = Math.round(your2);
-    yourHand.push(cards[indexYour2]);
-    cards.splice(indexYour2 , 1);
-    countHand();
+    if(tempMoney === 0){
+        document.getElementById('bet-overload').innerHTML = 'You have to place your bet';
+    }
+    else{
+        document.getElementById('hand').style.display = "block";
+        document.getElementById('bet').style.display = "none";
+        document.getElementById('hit-me').style.display = "block";
+        document.getElementById('stay').style.display = "block";
+        document.getElementById('start').style.display = "none";
+        addCard();
+        var dealer = Math.random()*cards.length;
+        var indexDealer = Math.round(dealer);
+        dealerHand.push(cards[indexDealer]);
+        cards.splice(indexDealer , 1);
+        var your1 = Math.random()*cards.length;
+        var indexYour1 = Math.round(your1);
+        yourHand.push(cards[indexYour1]);
+        cards.splice(indexYour1 , 1);
+        var your2 = Math.random()*cards.length;
+        var indexYour2 = Math.round(your2);
+        yourHand.push(cards[indexYour2]);
+        cards.splice(indexYour2 , 1);
+        countHand();
+    }
 }
 
 
