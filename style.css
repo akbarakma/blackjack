@@ -1,0 +1,94 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-image: url('main-bg.jpg');
+    background-repeat: none;
+    background-size: cover;
+}
+
+h1{
+    text-align: center;
+    margin-bottom: 50px;
+    margin-top: 50px;
+}
+
+#table {
+    text-align: center;
+    width: 500px;
+    margin: auto;
+    margin-top: 50px;
+    padding: 20px;
+    border-radius: 50px;
+    background-image: url('table-bg.jpg');
+    background-repeat: none;
+    background-size: cover;
+}
+
+#your-hand-card{
+    border: 1px solid black;
+    width: 300px;
+    height: 20px;
+    margin: 10px auto;
+}
+
+#dealer-hand-card{
+    border: 1px solid black;
+    width: 300px;
+    height: 20px;
+    margin: 10px auto;
+}
+
+#dealer-hand{
+    height: 30px;
+}
+
+#your-hand{
+    height: 30px;
+}
+
+#hit-me{
+    display: none;
+    margin: 20px auto;
+}
+
+#stay{
+    display: none;
+    margin: 20px auto;
+}
+
+#restart{
+    display: none;
+    margin: 20px auto;
+}
+
+#start{
+    margin: auto;
+}
+
+button {
+    background-color: blue;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    border-radius: 50px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+  }
+
+  #money{
+      text-align: center;
+      margin: auto;
+      background-color: white;
+      width: 300px;
+      height: 60px;
+      margin-top: 50px;
+  }

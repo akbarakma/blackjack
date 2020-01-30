@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>Blackjack</title>
+</head>
+<body>
+    <h1>This is a game of Blackjack</h1>
+    <div id='table'>
+        <h2>Dealer Hand : <p id='dealer-hand'></p></h2>
+        
+        <p id="dealer-hand-card"></p>
+        <h2>Your Hand : <p id="your-hand"></p></h2>
+        <p id="your-hand-card"></p>
+        <h2 id="lose-or-win"></h2>
+        <button id='hit-me' onclick="hit()">Hit Me</button>
+        <button id='stay' onclick="stay(dealerScore , yourScore)">Stay</button>
+        <button id='restart' onclick="restart()">Play Again</button>
+        <button id='start' onclick="startGame()">Start Game</button>
+    </div>
+    <div id="money">
+        <h2>Your Money :</h2>
+        <h3 id="your-money"></h3>
+    </div>
+
+    <script src="main.js" async defer></script>
+</body>
+</html>
