@@ -84,11 +84,42 @@ button {
     transition-duration: 0.4s;
   }
 
-  #money{
+#hand{
+    display: none;
+}
+
+#betting{
+    margin-top: 50px;
+}
+
+#your-bet{
+    height: 50px;
+}
+
+#place-bet{
+    margin-top: 15px;
+}
+
+#bet-overload{
+    height: 50px;
+}
+
+#broke{
+    height: 50px;
+}
+
+#buy-in{
+    display: none;
+    height: 50px;
+    margin: auto;
+}
+
+#money{
       text-align: center;
       margin: auto;
       background-color: white;
       width: 300px;
       height: 60px;
       margin-top: 50px;
-  }
+      border-radius: 50px;
+}

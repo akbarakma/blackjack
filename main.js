@@ -1,8 +1,9 @@
 var dealerHand = [];
 var yourHand = [];
 var cards = [];
-var money = 100000
+var money = 100000;
 
+// AS AS
 function convertToRupiah(angka){
 	var rupiah = '';		
 	var angkarev = angka.toString().split('').reverse().join('');
@@ -16,12 +17,37 @@ function addMoney(){
 }
 
 addMoney();
+var tempMoney = 0;
+function placeBet(num){
+    if((money - num) < 0){
+        document.getElementById('bet-overload').innerHTML = 'Not enough money';
+    }
+    else{
+        document.getElementById('bet-overload').innerHTML = '';
+        tempMoney += num;
+        money -= num
+        document.getElementById('your-bet').innerHTML = tempMoney;
+        var uang = convertToRupiah(money);
+        document.getElementById('your-money').innerHTML = uang;
+    }
+}
+
+function resetBet(){
+    money += tempMoney;
+    tempMoney = 0;
+    document.getElementById('your-bet').innerHTML = tempMoney;
+    var uang = convertToRupiah(money);
+    document.getElementById('your-money').innerHTML = uang;
+    document.getElementById('bet-overload').innerHTML = '';
+}
 
 function addCard(){
     cards.push(11,2,3,4,5,6,7,8,9,10,10,10,10,11,2,3,4,5,6,7,8,9,10,10,10,10,11,2,3,4,5,6,7,8,9,10,10,10,10,11,2,3,4,5,6,7,8,9,10,10,10,10);
 }
 
 function startGame(){
+    document.getElementById('hand').style.display = "block";
+    document.getElementById('bet').style.display = "none";
     document.getElementById('hit-me').style.display = "block";
     document.getElementById('stay').style.display = "block";
     document.getElementById('start').style.display = "none";
@@ -96,8 +122,6 @@ function stay(){
     
 }
 
-
-
 function hit(){
     var your = Math.random()*cards.length;
     var indexYour = Math.round(your);
@@ -107,8 +131,10 @@ function hit(){
 }
 
 function endGame(dealer,your){
+    var win = false;
     if(your === 21){
         document.getElementById('lose-or-win').innerHTML = 'YOU WIN';
+        win = true;
     }
     else if(dealer === 21){
         document.getElementById('lose-or-win').innerHTML = 'YOU LOSE';
@@ -118,16 +144,38 @@ function endGame(dealer,your){
     }
     else if(dealer > 21){
         document.getElementById('lose-or-win').innerHTML = 'YOU WIN';
+        win = true;
     }
     else if(your === dealer){
         document.getElementById('lose-or-win').innerHTML = 'DRAW';
+        money += tempMoney;
+        tempMoney = 0;
+        var uang = convertToRupiah(money);
+        document.getElementById('your-money').innerHTML = uang;
     }
     else if(your > dealer){
         document.getElementById('lose-or-win').innerHTML = 'YOU WIN';
+        win = true;
     }
     else{
         document.getElementById('lose-or-win').innerHTML = 'YOU LOSE';
     }
+    if(win){
+        if(yourHand.length === 2 && yourScore === 21){
+            var untung = tempMoney * 2;
+            untung *= 1.5;
+            money += untung;
+            var uang = convertToRupiah(money);
+            document.getElementById('your-money').innerHTML = uang;
+        }
+        else{
+            var untung = tempMoney * 2;
+            money += untung;
+            var uang = convertToRupiah(money);
+            document.getElementById('your-money').innerHTML = uang;
+        }
+    }
+    document.getElementById('your-bet').innerHTML = '';
     var dealerCardInHand = '';
     for(var i = 0 ; i < dealerHand.length ; i++){
         dealerCardInHand += dealerHand[i];
@@ -136,15 +184,32 @@ function endGame(dealer,your){
         }
     }
     document.getElementById('dealer-hand-card').innerHTML = dealerCardInHand;
-    document.getElementById('restart').style.display = "block";
-    document.getElementById('hit-me').style.display = "none";
-    document.getElementById('stay').style.display = "none";
+    checkMoney(money);
+}
 
+function checkMoney(money){
+    if(money < 25000){
+        document.getElementById('buy-in').style.display = "block";
+        document.getElementById('hit-me').style.display = "none";
+        document.getElementById('stay').style.display = "none";
+        document.getElementById('broke').innerHTML = 'You\'re broke, Game Over';
+    }
+    else{
+        document.getElementById('restart').style.display = "block";
+        document.getElementById('hit-me').style.display = "none";
+        document.getElementById('stay').style.display = "none";
+    }
+}
+
+function gameOver(){
+    money = 100000;
+    restart()
 }
 
 function restart(){
     cards = [];
     dealerScore = 0;
+    tempMoney = 0;
     yourScore = 0;
     dealerHand = [];
     yourHand = [];
@@ -153,6 +218,11 @@ function restart(){
     document.getElementById('your-hand-card').innerHTML = '';
     document.getElementById('dealer-hand').innerHTML = '';
     document.getElementById('your-hand').innerHTML = '';
+    document.getElementById('broke').innerHTML = '';
+    document.getElementById('your-bet').innerHTML = '';
+    document.getElementById('buy-in').style.display = "none";
     document.getElementById('restart').style.display = "none";
     document.getElementById('start').style.display = "block";
+    document.getElementById('bet').style.display = 'block';
+    document.getElementById('hand').style.display = "none";
 }

@@ -10,20 +10,34 @@
 <body>
     <h1>This is a game of Blackjack</h1>
     <div id='table'>
-        <h2>Dealer Hand : <p id='dealer-hand'></p></h2>
-        
-        <p id="dealer-hand-card"></p>
-        <h2>Your Hand : <p id="your-hand"></p></h2>
-        <p id="your-hand-card"></p>
-        <h2 id="lose-or-win"></h2>
-        <button id='hit-me' onclick="hit()">Hit Me</button>
-        <button id='stay' onclick="stay(dealerScore , yourScore)">Stay</button>
-        <button id='restart' onclick="restart()">Play Again</button>
-        <button id='start' onclick="startGame()">Start Game</button>
-    </div>
-    <div id="money">
-        <h2>Your Money :</h2>
-        <h3 id="your-money"></h3>
+        <div id="hand">
+            <h2>Dealer Hand : <p id='dealer-hand'></p></h2>
+            <p id="dealer-hand-card"></p>
+            <h2>Your Hand : <p id="your-hand"></p></h2>
+            <p id="your-hand-card"></p>
+            <h2 id="lose-or-win"></h2>
+            <h2 id="broke"></h2>
+            <button id='hit-me' onclick="hit()">Hit Me</button>
+            <button id='stay' onclick="stay(dealerScore , yourScore)">Stay</button>
+            <button id='restart' onclick="restart()">Play Again</button>
+            <button id='buy-in' onclick="gameOver()">Buy in</button>
+            <button id='start' onclick="startGame()">Start Game</button>
+        </div>
+        <!--bet-->
+        <div id="bet">
+            <h2>Place you bet</h2>
+            <h2 id="your-bet">0</h2>
+            <h2 id="bet-overload"></h2>
+            <button id='betting' onclick="placeBet(25000)">25.000</button>
+            <button id='betting' onclick="placeBet(50000)">50.000</button>
+            <button id='betting' onclick="placeBet(100000)">100.000</button>
+            <button id='reset-bet' onclick="resetBet()">Reset</button>
+            <button id='place-bet' onclick="startGame()">Start Game</button>
+        </div>
+        <div id="money">
+            <h2>Your Money :</h2>
+            <h3 id="your-money"></h3>
+        </div>
     </div>
 
     <script src="main.js" async defer></script>
