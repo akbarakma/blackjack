@@ -276,7 +276,8 @@ function checkMoney(money){
 
 function gameOver(){
     money = 100000;
-    document.getElementById('your-money').innerHTML = money;
+    var uang = convertToRupiah(money);
+    document.getElementById('your-money').innerHTML = uang;
     restart()
 }
 
