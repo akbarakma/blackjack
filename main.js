@@ -152,7 +152,10 @@ function countHand(){
     }
     document.getElementById('your-hand').innerHTML = yourScore;
 
-    if(dealerScore >20 || yourScore > 20){
+    if(yourScore === 21 && yourHand.length === 2){
+        endGame(dealerScore,yourScore);
+    }
+    else if(yourScore > 21){
         endGame(dealerScore,yourScore);
     }
 }
