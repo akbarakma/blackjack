@@ -3,8 +3,6 @@ var yourHand = [];
 var cards = [];
 var money = 100000;
 
-// AS AS
-// masih ada undefined
 function convertToRupiah(angka){
 	var rupiah = '';		
 	var angkarev = angka.toString().split('').reverse().join('');
@@ -43,7 +41,21 @@ function resetBet(){
 }
 
 function addCard(){
-    cards.push(11,2,3,4,5,6,7,8,9,10,10,10,10,11,2,3,4,5,6,7,8,9,10,10,10,10,11,2,3,4,5,6,7,8,9,10,10,10,10,11,2,3,4,5,6,7,8,9,10,10,10,10);
+    var temp = [11,2,3,4,5,6,7,8,9,10,10,10,10,11,2,3,4,5,6,7,8,9,10,10,10,10,11,2,3,4,5,6,7,8,9,10,10,10,10,11,2,3,4,5,6,7,8,9,10,10,10,10];
+    var newCard = shuffleCard(temp);
+    for(var i = 0 ; i < newCard.length ; i ++){
+        cards.push(newCard[i]);
+    }
+}
+
+function shuffleCard(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+    return array;
 }
 
 function startGame(){
@@ -56,19 +68,15 @@ function startGame(){
         document.getElementById('hit-me').style.display = "block";
         document.getElementById('stay').style.display = "block";
         document.getElementById('start').style.display = "none";
-        addCard();
-        var dealer = Math.random()*cards.length;
-        var indexDealer = Math.round(dealer);
-        dealerHand.push(cards[indexDealer]);
-        cards.splice(indexDealer , 1);
-        var your1 = Math.random()*cards.length;
-        var indexYour1 = Math.round(your1);
-        yourHand.push(cards[indexYour1]);
-        cards.splice(indexYour1 , 1);
-        var your2 = Math.random()*cards.length;
-        var indexYour2 = Math.round(your2);
-        yourHand.push(cards[indexYour2]);
-        cards.splice(indexYour2 , 1);
+        if(cards.length < 20){
+            addCard();
+        }
+        dealerHand.push(cards[0]);
+        cards.shift();
+        yourHand.push(cards[0]);
+        cards.shift();
+        yourHand.push(cards[0]);
+        cards.shift();
         countHand();
     }
 }
@@ -80,69 +88,104 @@ var yourScore = 0;
 function countHand(){
     dealerScore = 0;
     for(var i = 0 ; i < dealerHand.length ; i++){
-        dealerScore += dealerHand[i];
+        if(dealerHand[i] === 11){
+            if((dealerScore + 11) > 21){
+                dealerScore += 1;
+            }
+            else{
+                dealerScore += dealerHand[i];
+            }
+        }
+        else{
+            dealerScore += dealerHand[i];
+        }
     }
     document.getElementById('dealer-hand').innerHTML = dealerScore;
 
     var dealerCardInHand = '';
     for(var i = 0 ; i < dealerHand.length ; i++){
-        dealerCardInHand += dealerHand[i];
+        if(dealerHand[i] === 11){
+            dealerCardInHand += 'A';    
+        }
+        else{
+            dealerCardInHand += dealerHand[i];
+        }
         if(i!== dealerHand.length-1){
             dealerCardInHand += ' , '
         }
     }
     document.getElementById('dealer-hand-card').innerHTML = dealerCardInHand;
-
+    
+    ////
+    var checkA = false;
     var cardInHand = '';
-    yourScore = 0;
     for(var i = 0 ; i < yourHand.length ; i++){
-        yourScore += yourHand[i];
-    }
-    document.getElementById('your-hand').innerHTML = yourScore;
-    for(var i = 0 ; i < yourHand.length ; i++){
-        cardInHand += yourHand[i];
+        if(yourHand[i] === 11){
+            cardInHand += 'A';
+            checkA = true;
+        }
+        else{ 
+            cardInHand += yourHand[i];
+        }
         if(i!== yourHand.length-1){
             cardInHand += ' , '
         }
     }
     document.getElementById('your-hand-card').innerHTML = cardInHand;
-    if(yourScore > 21 && yourHand.length === 2){
-        yourScore = 2;
-        document.getElementById('your-hand').innerHTML = yourScore;
+
+    yourScore = 0;
+    for(var i = 0 ; i < yourHand.length ; i++){
+        yourScore += yourHand[i];
     }
-    else if(yourHand[yourHand.length-1] === 11){
-        yourScore -= yourHand[yourHand.length-1];
-        yourScore += 1;
-        document.getElementById('your-hand').innerHTML = yourScore;
+    if(checkA){
+        if(yourScore > 21){
+            yourScore = 0;
+            for(var i = 0 ; i < yourHand.length ; i ++){
+                if(yourHand[i] === 11){
+                    yourScore += 1;
+                }
+                else{
+                    yourScore += yourHand[i];
+                }
+            }
+        }
     }
+    document.getElementById('your-hand').innerHTML = yourScore;
+
     if(dealerScore >20 || yourScore > 20){
         endGame(dealerScore,yourScore);
     }
 }
 
 function stay(){
-    while(dealerScore < 18){
-        var dealer = Math.random()*cards.length;
-        var indexDealer = Math.round(dealer);
-        dealerHand.push(cards[indexDealer]);
-        cards.splice(indexDealer , 1);
-        if(dealerHand[dealerHand.length-1] === 11 && dealerScore < 21){
-            if(dealerScore + 11 === 21){
-                dealerScore = 21;
-            }
-            else{
-                dealerScore += 1;
-                dealerHand.pop();
-                dealerHand.push(1);
+    var stop = false;
+    while(stop === false){
+        dealerHand.push(cards[0]);
+        cards.shift();
+        var checkA = false;
+        dealerScore = 0;
+        for(var i = 0 ; i < dealerHand.length ; i++){
+            dealerScore += dealerHand[i];
+            if(dealerHand[i] === 11){
+                checkA = true;
             }
         }
-        else{
-            dealerScore += dealerHand[dealerHand.length-1];
+        if(checkA){
+            if(dealerScore > 21){
+                dealerScore = 0;
+                for(var i = 0 ; i < dealerHand.length ; i ++){
+                    if(dealerHand[i] === 11){
+                        dealerScore += 1;
+                    }
+                    else{
+                        dealerScore += dealerHand[i];
+                    }
+                }
+            }
         }
-    }
-    dealerScore = 0;
-    for(var i = 0 ; i < dealerHand.length ; i++){
-        dealerScore += dealerHand[i];
+        if(dealerScore > 18){
+            stop = true;
+        }
     }
     document.getElementById('dealer-hand').innerHTML = dealerScore;
     endGame(dealerScore , yourScore);
@@ -150,10 +193,8 @@ function stay(){
 }
 
 function hit(){
-    var your = Math.random()*cards.length;
-    var indexYour = Math.round(your);
-    yourHand.push(cards[indexYour]);
-    cards.splice(indexYour , 1);
+    yourHand.push(cards[0]);
+    cards.shift();
     countHand();
 }
 
@@ -205,7 +246,12 @@ function endGame(dealer,your){
     document.getElementById('your-bet').innerHTML = '';
     var dealerCardInHand = '';
     for(var i = 0 ; i < dealerHand.length ; i++){
-        dealerCardInHand += dealerHand[i];
+        if(dealerHand[i] === 11){
+            dealerCardInHand += 'A';    
+        }
+        else{
+            dealerCardInHand += dealerHand[i];
+        }
         if(i!== dealerHand.length-1){
             dealerCardInHand += ' , '
         }
