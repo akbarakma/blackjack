@@ -1,3 +1,3 @@
 # blackjack
 
-[https://akbarakma.github.io/blackjack/](Link)
+[https://akbarakma.github.io/blackjack/](https://akbarakma.github.io/blackjack/)
