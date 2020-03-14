@@ -1,2 +1,3 @@
 # blackjack
-no gambling ya bro
+
+[https://akbarakma.github.io/blackjack/](Link)
